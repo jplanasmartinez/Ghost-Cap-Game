@@ -7,6 +7,7 @@ public class InputManager : MonoBehaviour {
     public static InputManager _instance;
     [Header("Ingame Actions")]
     public InputActionReference carMovementAction;
+    public InputActionReference carJumpAction;
     
     private void Awake()
     {

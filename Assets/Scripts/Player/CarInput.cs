@@ -16,15 +16,26 @@ public class CarInput : MonoBehaviour {
     {
         InputManager._instance.carMovementAction.action.performed += MoveCar;
         InputManager._instance.carMovementAction.action.canceled += MoveCar;
+        InputManager._instance.carJumpAction.action.performed += JumpCar;
     }
 
     private void OnDestroy() {
         InputManager._instance.carMovementAction.action.performed -= MoveCar;
         InputManager._instance.carMovementAction.action.canceled -= MoveCar;
+        InputManager._instance.carJumpAction.action.performed -= JumpCar;
     }
 
     private void MoveCar(InputAction.CallbackContext obj) {
-        Debug.Log(InputManager._instance.carMovementAction.action.ReadValue<Vector2>());
-        _carController.MoveCar(InputManager._instance.carMovementAction.action.ReadValue<Vector2>());
+        if (obj.performed) {
+            _carController.MoveCar(InputManager._instance.carMovementAction.action.ReadValue<Vector2>());
+        } else if (obj.canceled) {
+            _carController.MoveCar(Vector2.zero);
+        }
     }
+
+    private void JumpCar(InputAction.CallbackContext obj) {
+        Debug.Log("Jump");
+    }
+    
+
 }
