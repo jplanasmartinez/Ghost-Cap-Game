@@ -24,6 +24,7 @@ public class CarInput : MonoBehaviour {
     }
 
     private void MoveCar(InputAction.CallbackContext obj) {
+        Debug.Log(InputManager._instance.carMovementAction.action.ReadValue<Vector2>());
         _carController.MoveCar(InputManager._instance.carMovementAction.action.ReadValue<Vector2>());
     }
 }
