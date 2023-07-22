@@ -12,6 +12,5 @@ public class CarData : ScriptableObject {
     [Header("MovementMagnitudes")]
     [Range(1,100)] public float speed;
     [Range(1,100)] public float maxSpeed;
-    public float speedCorrectionValue;
-    public float speedCorrectionTime;
+    [Range(0.1f,5)]public float speedDecrease;
 }

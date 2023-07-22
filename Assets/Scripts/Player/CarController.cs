@@ -9,7 +9,6 @@ public class CarController : MonoBehaviour {
      [SerializeField] private CarData carData; 
     private Rigidbody _rigidbody;
     private Vector2 _direction;
-    private float _speedReducer;
 
     #region Unity Functions
     private void Awake() {
@@ -26,9 +25,11 @@ public class CarController : MonoBehaviour {
     
     #region Car Movement
     private void ApplyForces() {
-        CalculateSpeedReducer();
         _rigidbody.AddForce(new Vector3(_direction.x * carData.speed, 0, _direction.y * carData.speed));
-        _rigidbody.AddForce(new Vector3(-_direction.x * carData.speed * _speedReducer, 0, -_direction.y * carData.speed*_speedReducer));
+        if (_direction == Vector2.zero && _rigidbody.velocity != Vector3.zero) {
+            ReduceSpeed();
+            Debug.Log(_rigidbody.velocity.magnitude);
+        }
     }
 
     public void MoveCar(Vector2 directionEntry) {
@@ -42,23 +43,19 @@ public class CarController : MonoBehaviour {
     
     private void CorrectMaximumSpeed() {
         _rigidbody.velocity = Vector3.ClampMagnitude(_rigidbody.velocity, carData.maxSpeed);
-        //Debug.Log(MathF.Floor(velocityX+velocityZ));
+    }
+    
+    private void ReduceSpeed() {
+        if (_rigidbody.velocity.magnitude > 0) {
+            Vector3 reducedVelocity = Vector3.Lerp(_rigidbody.velocity, Vector3.zero, carData.speedDecrease * Time.deltaTime);
+            _rigidbody.velocity = reducedVelocity;
+        }
     }
     
     #endregion
     
     #region Auxiliar Functions
-
-    private void CalculateSpeedReducer() {
-        Debug.Log(_speedReducer);
-        if (_direction != Vector2.zero) {
-            _speedReducer = carData.speedCorrectionValue;
-        } else if (_speedReducer > 0){
-            _speedReducer -= carData.speedCorrectionTime * Time.deltaTime;
-        } else if (_speedReducer <= 0) {
-            _speedReducer = 0;
-        }
-    }
+    
     private int CalculateRotationByDirection() {
         int directionX = Mathf.RoundToInt(_direction.x);
         int directionY = Mathf.RoundToInt(_direction.y);

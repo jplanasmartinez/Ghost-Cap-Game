@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8887db8ecf389f4f951cad31c068a7d, type: 3}
   m_Name: CarData
   m_EditorClassIdentifier: 
-  rotationY: {x: 0, y: 0.71258944, z: 0, w: 0.70158124}
-  rotationSpeed: 0.087
-  speed: 28
-  maxSpeed: 39
-  speedCorrectionValue: 0.02
-  speedCorrectionTime: 0.1
+  rotationY: {x: 0, y: 0.7102039, z: 0, w: 0.7039961}
+  rotationSpeed: 0.075
+  speed: 25.1
+  maxSpeed: 40.6
+  speedDecrease: 1.88
